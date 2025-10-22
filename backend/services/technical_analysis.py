@@ -1,5 +1,5 @@
 import pandas as pd
-import pandas_ta as ta
+import ta
 from typing import Dict, List
 
 class TechnicalAnalysis:
@@ -19,11 +19,11 @@ class TechnicalAnalysis:
         close = df['close']
 
         return {
-            "sma_20": float(ta.sma(close, length=20).iloc[-1]) if len(df) >= 20 else None,
-            "sma_50": float(ta.sma(close, length=50).iloc[-1]) if len(df) >= 50 else None,
-            "sma_200": float(ta.sma(close, length=200).iloc[-1]) if len(df) >= 200 else None,
-            "ema_12": float(ta.ema(close, length=12).iloc[-1]) if len(df) >= 12 else None,
-            "ema_26": float(ta.ema(close, length=26).iloc[-1]) if len(df) >= 26 else None,
+            "sma_20": float(ta.trend.sma_indicator(close, window=20).iloc[-1]) if len(df) >= 20 else None,
+            "sma_50": float(ta.trend.sma_indicator(close, window=50).iloc[-1]) if len(df) >= 50 else None,
+            "sma_200": float(ta.trend.sma_indicator(close, window=200).iloc[-1]) if len(df) >= 200 else None,
+            "ema_12": float(ta.trend.ema_indicator(close, window=12).iloc[-1]) if len(df) >= 12 else None,
+            "ema_26": float(ta.trend.ema_indicator(close, window=26).iloc[-1]) if len(df) >= 26 else None,
         }
 
     def calculate_rsi(self, df: pd.DataFrame, period: int = 14) -> Dict:
@@ -31,8 +31,8 @@ class TechnicalAnalysis:
         if len(df) < period:
             return {"value": None, "signal": "neutral"}
 
-        rsi = ta.rsi(df['close'], length=period)
-        rsi_value = float(rsi.iloc[-1])
+        rsi_indicator = ta.momentum.RSIIndicator(close=df['close'], window=period)
+        rsi_value = float(rsi_indicator.rsi().iloc[-1])
 
         # Determine signal
         if rsi_value > 70:
@@ -57,19 +57,11 @@ class TechnicalAnalysis:
                 "signal": "neutral"
             }
 
-        macd_result = ta.macd(df['close'])
+        macd = ta.trend.MACD(close=df['close'])
 
-        if macd_result is None or macd_result.empty:
-            return {
-                "macd_line": None,
-                "signal_line": None,
-                "histogram": None,
-                "signal": "neutral"
-            }
-
-        macd_line = float(macd_result['MACD_12_26_9'].iloc[-1])
-        signal_line = float(macd_result['MACDs_12_26_9'].iloc[-1])
-        histogram = float(macd_result['MACDh_12_26_9'].iloc[-1])
+        macd_line = float(macd.macd().iloc[-1])
+        signal_line = float(macd.macd_signal().iloc[-1])
+        histogram = float(macd.macd_diff().iloc[-1])
 
         # Determine signal
         if macd_line > signal_line and histogram > 0:
@@ -96,20 +88,12 @@ class TechnicalAnalysis:
                 "bandwidth": None
             }
 
-        bbands = ta.bbands(df['close'], length=period)
+        bb = ta.volatility.BollingerBands(close=df['close'], window=period, window_dev=2)
 
-        if bbands is None or bbands.empty:
-            return {
-                "upper": None,
-                "middle": None,
-                "lower": None,
-                "bandwidth": None
-            }
-
-        upper = float(bbands[f'BBU_{period}_2.0'].iloc[-1])
-        middle = float(bbands[f'BBM_{period}_2.0'].iloc[-1])
-        lower = float(bbands[f'BBL_{period}_2.0'].iloc[-1])
-        bandwidth = float(bbands[f'BBB_{period}_2.0'].iloc[-1])
+        upper = float(bb.bollinger_hband().iloc[-1])
+        middle = float(bb.bollinger_mavg().iloc[-1])
+        lower = float(bb.bollinger_lband().iloc[-1])
+        bandwidth = float(bb.bollinger_wband().iloc[-1])
 
         return {
             "upper": upper,
