@@ -4,14 +4,21 @@ export const CUSTOM_TOKENS = [
     symbol: 'DDD',
     name: 'DDD Token',
     contractAddress: '0x4bf82cf0d6b2afc87367052b793097153c859d38',
-    platform: 'ethereum',
+    platform: 'polygon',
     isCustomToken: true
   },
   {
     symbol: 'xaIREGEN',
     name: 'xaIREGEN',
     contractAddress: '0xdfffe0c33b4011c4218acd61e68a62a32eaf9a8b',
-    platform: 'ethereum',
+    platform: 'polygon',
+    isCustomToken: true
+  },
+  {
+    symbol: 'EARTH',
+    name: 'EARTH Token',
+    contractAddress: '0xbe4247bdf0e161b65747e4fefbd4821d21ed05d2',
+    platform: 'polygon',
     isCustomToken: true
   }
 ];
