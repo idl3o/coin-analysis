@@ -1,38 +1,61 @@
-import pandas as pd
-import ta
 from typing import Dict, List
+import statistics
 
 class TechnicalAnalysis:
     def __init__(self):
         pass
 
-    def _prepare_dataframe(self, historical_data: Dict) -> pd.DataFrame:
-        """Convert historical data to pandas DataFrame"""
-        df = pd.DataFrame(historical_data["data"])
-        df['datetime'] = pd.to_datetime(df['timestamp'], unit='ms')
-        df.set_index('datetime', inplace=True)
-        df = df.sort_index()
-        return df
+    def _get_closes(self, historical_data: Dict) -> List[float]:
+        """Extract close prices from historical data"""
+        return [float(candle['close']) for candle in historical_data['data']]
 
-    def calculate_moving_averages(self, df: pd.DataFrame) -> Dict:
+    def calculate_sma(self, values: List[float], period: int) -> float:
+        """Calculate Simple Moving Average"""
+        if len(values) < period:
+            return None
+        return sum(values[-period:]) / period
+
+    def calculate_ema(self, values: List[float], period: int) -> float:
+        """Calculate Exponential Moving Average"""
+        if len(values) < period:
+            return None
+
+        multiplier = 2 / (period + 1)
+        ema = sum(values[:period]) / period  # Start with SMA
+
+        for price in values[period:]:
+            ema = (price - ema) * multiplier + ema
+
+        return ema
+
+    def calculate_moving_averages(self, closes: List[float]) -> Dict:
         """Calculate various moving averages"""
-        close = df['close']
-
         return {
-            "sma_20": float(ta.trend.sma_indicator(close, window=20).iloc[-1]) if len(df) >= 20 else None,
-            "sma_50": float(ta.trend.sma_indicator(close, window=50).iloc[-1]) if len(df) >= 50 else None,
-            "sma_200": float(ta.trend.sma_indicator(close, window=200).iloc[-1]) if len(df) >= 200 else None,
-            "ema_12": float(ta.trend.ema_indicator(close, window=12).iloc[-1]) if len(df) >= 12 else None,
-            "ema_26": float(ta.trend.ema_indicator(close, window=26).iloc[-1]) if len(df) >= 26 else None,
+            "sma_20": self.calculate_sma(closes, 20),
+            "sma_50": self.calculate_sma(closes, 50),
+            "sma_200": self.calculate_sma(closes, 200),
+            "ema_12": self.calculate_ema(closes, 12),
+            "ema_26": self.calculate_ema(closes, 26),
         }
 
-    def calculate_rsi(self, df: pd.DataFrame, period: int = 14) -> Dict:
+    def calculate_rsi(self, closes: List[float], period: int = 14) -> Dict:
         """Calculate RSI indicator"""
-        if len(df) < period:
+        if len(closes) < period + 1:
             return {"value": None, "signal": "neutral"}
 
-        rsi_indicator = ta.momentum.RSIIndicator(close=df['close'], window=period)
-        rsi_value = float(rsi_indicator.rsi().iloc[-1])
+        changes = [closes[i] - closes[i-1] for i in range(1, len(closes))]
+
+        gains = [change if change > 0 else 0 for change in changes]
+        losses = [abs(change) if change < 0 else 0 for change in changes]
+
+        avg_gain = sum(gains[-period:]) / period
+        avg_loss = sum(losses[-period:]) / period
+
+        if avg_loss == 0:
+            rsi_value = 100
+        else:
+            rs = avg_gain / avg_loss
+            rsi_value = 100 - (100 / (1 + rs))
 
         # Determine signal
         if rsi_value > 70:
@@ -43,13 +66,13 @@ class TechnicalAnalysis:
             signal = "neutral"
 
         return {
-            "value": rsi_value,
+            "value": round(rsi_value, 2),
             "signal": signal
         }
 
-    def calculate_macd(self, df: pd.DataFrame) -> Dict:
+    def calculate_macd(self, closes: List[float]) -> Dict:
         """Calculate MACD indicator"""
-        if len(df) < 26:
+        if len(closes) < 26:
             return {
                 "macd_line": None,
                 "signal_line": None,
@@ -57,11 +80,29 @@ class TechnicalAnalysis:
                 "signal": "neutral"
             }
 
-        macd = ta.trend.MACD(close=df['close'])
+        ema_12 = self.calculate_ema(closes, 12)
+        ema_26 = self.calculate_ema(closes, 26)
 
-        macd_line = float(macd.macd().iloc[-1])
-        signal_line = float(macd.macd_signal().iloc[-1])
-        histogram = float(macd.macd_diff().iloc[-1])
+        if ema_12 is None or ema_26 is None:
+            return {
+                "macd_line": None,
+                "signal_line": None,
+                "histogram": None,
+                "signal": "neutral"
+            }
+
+        macd_line = ema_12 - ema_26
+
+        # Calculate signal line (9-period EMA of MACD)
+        macd_values = []
+        for i in range(26, len(closes) + 1):
+            ema12 = self.calculate_ema(closes[:i], 12)
+            ema26 = self.calculate_ema(closes[:i], 26)
+            if ema12 and ema26:
+                macd_values.append(ema12 - ema26)
+
+        signal_line = self.calculate_ema(macd_values, 9) if len(macd_values) >= 9 else macd_line
+        histogram = macd_line - signal_line if signal_line else 0
 
         # Determine signal
         if macd_line > signal_line and histogram > 0:
@@ -72,15 +113,15 @@ class TechnicalAnalysis:
             signal = "neutral"
 
         return {
-            "macd_line": macd_line,
-            "signal_line": signal_line,
-            "histogram": histogram,
+            "macd_line": round(macd_line, 2),
+            "signal_line": round(signal_line, 2) if signal_line else None,
+            "histogram": round(histogram, 2),
             "signal": signal
         }
 
-    def calculate_bollinger_bands(self, df: pd.DataFrame, period: int = 20) -> Dict:
+    def calculate_bollinger_bands(self, closes: List[float], period: int = 20) -> Dict:
         """Calculate Bollinger Bands"""
-        if len(df) < period:
+        if len(closes) < period:
             return {
                 "upper": None,
                 "middle": None,
@@ -88,27 +129,36 @@ class TechnicalAnalysis:
                 "bandwidth": None
             }
 
-        bb = ta.volatility.BollingerBands(close=df['close'], window=period, window_dev=2)
+        sma = self.calculate_sma(closes, period)
+        recent_closes = closes[-period:]
 
-        upper = float(bb.bollinger_hband().iloc[-1])
-        middle = float(bb.bollinger_mavg().iloc[-1])
-        lower = float(bb.bollinger_lband().iloc[-1])
-        bandwidth = float(bb.bollinger_wband().iloc[-1])
+        # Calculate standard deviation
+        variance = sum((x - sma) ** 2 for x in recent_closes) / period
+        std_dev = variance ** 0.5
+
+        upper = sma + (2 * std_dev)
+        lower = sma - (2 * std_dev)
+        bandwidth = (upper - lower) / sma if sma != 0 else 0
 
         return {
-            "upper": upper,
-            "middle": middle,
-            "lower": lower,
-            "bandwidth": bandwidth
+            "upper": round(upper, 2),
+            "middle": round(sma, 2),
+            "lower": round(lower, 2),
+            "bandwidth": round(bandwidth, 4)
         }
 
-    def analyze_volume_trend(self, df: pd.DataFrame) -> str:
+    def analyze_volume_trend(self, historical_data: Dict) -> str:
         """Analyze volume trend (if available)"""
-        if 'volume' not in df.columns or df['volume'].sum() == 0:
+        volumes = [candle.get('volume', 0) for candle in historical_data['data']]
+
+        if sum(volumes) == 0 or len(volumes) < 20:
             return "neutral"
 
-        recent_volume = df['volume'].tail(5).mean()
-        older_volume = df['volume'].tail(20).head(15).mean()
+        recent_volume = sum(volumes[-5:]) / 5
+        older_volume = sum(volumes[-20:-5]) / 15
+
+        if older_volume == 0:
+            return "neutral"
 
         if recent_volume > older_volume * 1.2:
             return "increasing"
@@ -157,14 +207,25 @@ class TechnicalAnalysis:
 
     def calculate_all_indicators(self, historical_data: Dict) -> Dict:
         """Calculate all technical indicators"""
-        df = self._prepare_dataframe(historical_data)
+        closes = self._get_closes(historical_data)
 
-        current_price = float(df['close'].iloc[-1])
-        moving_averages = self.calculate_moving_averages(df)
-        rsi = self.calculate_rsi(df)
-        macd = self.calculate_macd(df)
-        bollinger_bands = self.calculate_bollinger_bands(df)
-        volume_trend = self.analyze_volume_trend(df)
+        if not closes:
+            return {
+                "current_price": 0,
+                "moving_averages": {},
+                "rsi": {"value": None, "signal": "neutral"},
+                "macd": {},
+                "bollinger_bands": {},
+                "volume_trend": "neutral",
+                "overall_signal": "neutral"
+            }
+
+        current_price = closes[-1]
+        moving_averages = self.calculate_moving_averages(closes)
+        rsi = self.calculate_rsi(closes)
+        macd = self.calculate_macd(closes)
+        bollinger_bands = self.calculate_bollinger_bands(closes)
+        volume_trend = self.analyze_volume_trend(historical_data)
 
         indicators = {
             "current_price": current_price,
