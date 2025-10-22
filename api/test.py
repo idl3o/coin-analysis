@@ -3,7 +3,7 @@ from mangum import Mangum
 
 app = FastAPI()
 
-@app.get("/api/test")
+@app.get("/test")
 def test():
     return {"status": "ok", "message": "API is working!"}
 

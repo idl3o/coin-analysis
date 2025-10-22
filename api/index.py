@@ -24,7 +24,7 @@ ta_service = TechnicalAnalysis()
 async def root():
     return {"message": "Crypto Analysis API", "status": "running", "version": "1.0.0"}
 
-@app.get("/api/crypto/price/{symbol}")
+@app.get("/crypto/price/{symbol}")
 async def get_current_price(symbol: str):
     """Get current price for a cryptocurrency"""
     try:
@@ -33,7 +33,7 @@ async def get_current_price(symbol: str):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-@app.get("/api/crypto/prices")
+@app.get("/crypto/prices")
 async def get_multiple_prices(symbols: str = Query(..., description="Comma-separated symbols")):
     """Get current prices for multiple cryptocurrencies"""
     try:
@@ -43,7 +43,7 @@ async def get_multiple_prices(symbols: str = Query(..., description="Comma-separ
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-@app.get("/api/crypto/historical/{symbol}")
+@app.get("/crypto/historical/{symbol}")
 async def get_historical_data(
     symbol: str,
     days: int = Query(default=30, ge=1, le=365),
@@ -56,7 +56,7 @@ async def get_historical_data(
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-@app.get("/api/crypto/indicators/{symbol}")
+@app.get("/crypto/indicators/{symbol}")
 async def get_technical_indicators(
     symbol: str,
     days: int = Query(default=30, ge=1, le=365),
@@ -78,7 +78,7 @@ async def get_technical_indicators(
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-@app.get("/api/crypto/top")
+@app.get("/crypto/top")
 async def get_top_cryptocurrencies(limit: int = Query(default=20, ge=1, le=100)):
     """Get top cryptocurrencies by market cap"""
     try:
@@ -87,7 +87,7 @@ async def get_top_cryptocurrencies(limit: int = Query(default=20, ge=1, le=100))
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-@app.get("/api/crypto/token/contract/{contract_address}")
+@app.get("/crypto/token/contract/{contract_address}")
 async def get_token_by_contract(
     contract_address: str,
     platform: str = Query(default="ethereum", description="Blockchain platform")
@@ -99,7 +99,7 @@ async def get_token_by_contract(
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-@app.get("/api/crypto/token/{coin_id}/historical")
+@app.get("/crypto/token/{coin_id}/historical")
 async def get_token_historical(
     coin_id: str,
     days: int = Query(default=30, ge=1, le=365)
@@ -111,7 +111,7 @@ async def get_token_historical(
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-@app.get("/api/crypto/token/{coin_id}/indicators")
+@app.get("/crypto/token/{coin_id}/indicators")
 async def get_token_indicators(
     coin_id: str,
     days: int = Query(default=30, ge=1, le=365)
