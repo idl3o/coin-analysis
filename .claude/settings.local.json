@@ -4,7 +4,10 @@
       "Bash(vercel --version:*)",
       "Bash(vercel:*)",
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Read(//c/Users/Sam/Pictures/Screenshots/**)",
+      "Bash(curl:*)",
+      "Bash(git push:*)"
     ],
     "deny": [],
     "ask": []
