@@ -1,14 +1,10 @@
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from mangum import Mangum
-import sys
-import os
 
-# Add parent directory to path to import backend modules
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-from backend.services.crypto_service import CryptoService
-from backend.services.technical_analysis import TechnicalAnalysis
+# Import from local api directory
+from crypto_service import CryptoService
+from technical_analysis import TechnicalAnalysis
 
 app = FastAPI(title="Crypto Analysis API", version="1.0.0")
 
