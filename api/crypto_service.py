@@ -2,7 +2,6 @@ import aiohttp
 import asyncio
 from typing import List, Dict, Optional
 from datetime import datetime, timedelta
-import pandas as pd
 
 class CryptoService:
     def __init__(self):
