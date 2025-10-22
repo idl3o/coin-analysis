@@ -1,16 +1,18 @@
+from http.server import BaseHTTPRequestHandler
 import json
 
-def handler(event, context):
-    """Simple handler function for Vercel"""
-    return {
-        'statusCode': 200,
-        'headers': {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*'
-        },
-        'body': json.dumps({
+class handler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.send_header('Content-type', 'application/json')
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.end_headers()
+
+        response = {
             'message': 'API is working!',
             'status': 'ok',
             'test': True
-        })
-    }
+        }
+
+        self.wfile.write(json.dumps(response).encode())
+        return
