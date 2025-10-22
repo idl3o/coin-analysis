@@ -1,0 +1,58 @@
+.chart-view {
+  padding: 0.5rem;
+}
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.chart-header h2 {
+  font-size: 1.3rem;
+  color: #333;
+}
+
+.current-price-display {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.current-price-label {
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 0.25rem;
+}
+
+.current-price-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #667eea;
+}
+
+.price-range {
+  display: flex;
+  gap: 2rem;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e0e0e0;
+}
+
+.range-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.range-item .label {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.range-item .value {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+}

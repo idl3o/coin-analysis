@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+backend/venv/
+backend/env/
+
+# Python
+__pycache__/
+*.py[cod]
+*.so
+
+# Environment
+.env
+.env.local
+.env.development
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+logs/
+
+# Development
+.DS_Store
+*.swp
+*.swo
+
+# Build (will be rebuilt on Vercel)
+frontend/dist/

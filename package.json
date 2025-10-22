@@ -1,0 +1,11 @@
+{
+  "name": "crypto-analysis-platform",
+  "version": "1.0.0",
+  "description": "Cryptocurrency Technical Analysis Dashboard",
+  "scripts": {
+    "vercel-build": "cd frontend && npm install && npm run build"
+  },
+  "keywords": ["crypto", "analysis", "technical-analysis", "dashboard"],
+  "author": "",
+  "license": "MIT"
+}

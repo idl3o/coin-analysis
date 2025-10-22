@@ -1,0 +1,198 @@
+.technical-indicators {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.technical-indicators h2 {
+  font-size: 1.3rem;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.overall-signal {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 10px;
+  margin-bottom: 1.5rem;
+}
+
+.overall-signal.positive {
+  background: rgba(16, 185, 129, 0.1);
+  border: 2px solid #10b981;
+  color: #10b981;
+}
+
+.overall-signal.negative {
+  background: rgba(239, 68, 68, 0.1);
+  border: 2px solid #ef4444;
+  color: #ef4444;
+}
+
+.overall-signal.neutral {
+  background: rgba(107, 114, 128, 0.1);
+  border: 2px solid #6b7280;
+  color: #6b7280;
+}
+
+.signal-label {
+  display: block;
+  font-size: 0.85rem;
+  opacity: 0.8;
+  margin-bottom: 0.25rem;
+}
+
+.signal-value {
+  display: block;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.indicators-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  overflow-y: auto;
+}
+
+.indicator-card {
+  background: #f9fafb;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+}
+
+.indicator-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  color: #667eea;
+}
+
+.indicator-header h3 {
+  font-size: 1rem;
+  color: #333;
+}
+
+.indicator-value-large {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.indicator-signal {
+  display: inline-block;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.indicator-signal.positive {
+  background: rgba(16, 185, 129, 0.15);
+  color: #10b981;
+}
+
+.indicator-signal.negative {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+}
+
+.indicator-signal.neutral {
+  background: rgba(107, 114, 128, 0.15);
+  color: #6b7280;
+}
+
+.rsi-bar {
+  position: relative;
+  width: 100%;
+  height: 8px;
+  background: #e5e7eb;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.rsi-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #10b981 0%, #f59e0b 50%, #ef4444 100%);
+  border-radius: 4px;
+  transition: width 0.5s;
+}
+
+.rsi-marker {
+  position: absolute;
+  top: 0;
+  width: 2px;
+  height: 100%;
+  background: #333;
+}
+
+.macd-values {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.macd-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.macd-label {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.macd-value {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.macd-value.positive {
+  color: #10b981;
+}
+
+.macd-value.negative {
+  color: #ef4444;
+}
+
+.ma-list,
+.bb-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.ma-item,
+.bb-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ma-label,
+.bb-label {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.ma-value,
+.bb-value {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.no-data {
+  color: #999;
+  font-style: italic;
+  padding: 1rem 0;
+}
