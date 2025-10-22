@@ -36,6 +36,30 @@ export const cryptoAPI = {
   getTopCryptocurrencies: async (limit = 20) => {
     const response = await axios.get(`${API_BASE_URL}/crypto/top?limit=${limit}`);
     return response.data;
+  },
+
+  // Get token by contract address
+  getTokenByContract: async (contractAddress, platform = 'ethereum') => {
+    const response = await axios.get(
+      `${API_BASE_URL}/crypto/token/contract/${contractAddress}?platform=${platform}`
+    );
+    return response.data;
+  },
+
+  // Get token historical data by coin_id
+  getTokenHistoricalData: async (coinId, days = 30) => {
+    const response = await axios.get(
+      `${API_BASE_URL}/crypto/token/${coinId}/historical?days=${days}`
+    );
+    return response.data;
+  },
+
+  // Get token technical indicators by coin_id
+  getTokenIndicators: async (coinId, days = 30) => {
+    const response = await axios.get(
+      `${API_BASE_URL}/crypto/token/${coinId}/indicators?days=${days}`
+    );
+    return response.data;
   }
 };
 
