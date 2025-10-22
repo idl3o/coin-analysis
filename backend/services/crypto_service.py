@@ -113,6 +113,67 @@ class CryptoService:
             else:
                 raise Exception(f"Failed to fetch historical data for {symbol}: {response.status}")
 
+    async def get_token_by_contract(self, contract_address: str, platform: str = "ethereum") -> Dict:
+        """Get token data by contract address"""
+        session = await self._get_session()
+
+        url = f"{self.base_url}/coins/{platform}/contract/{contract_address.lower()}"
+
+        async with session.get(url) as response:
+            if response.status == 200:
+                data = await response.json()
+                market_data = data.get("market_data", {})
+
+                return {
+                    "symbol": data.get("symbol", "").upper(),
+                    "name": data.get("name", ""),
+                    "contract_address": contract_address,
+                    "platform": platform,
+                    "current_price": market_data.get("current_price", {}).get("usd", 0),
+                    "market_cap": market_data.get("market_cap", {}).get("usd"),
+                    "volume_24h": market_data.get("total_volume", {}).get("usd"),
+                    "price_change_24h": market_data.get("price_change_24h"),
+                    "price_change_percentage_24h": market_data.get("price_change_percentage_24h"),
+                    "image": data.get("image", {}).get("small"),
+                    "coin_id": data.get("id"),
+                    "last_updated": datetime.now().isoformat()
+                }
+            else:
+                raise Exception(f"Failed to fetch token {contract_address}: {response.status}")
+
+    async def get_token_historical_data(self, coin_id: str, days: int = 30) -> Dict:
+        """Get historical OHLCV data for a token by coin_id"""
+        session = await self._get_session()
+
+        url = f"{self.base_url}/coins/{coin_id}/ohlc"
+        params = {
+            "vs_currency": "usd",
+            "days": days
+        }
+
+        async with session.get(url, params=params) as response:
+            if response.status == 200:
+                data = await response.json()
+
+                # Format data
+                formatted_data = []
+                for candle in data:
+                    formatted_data.append({
+                        "timestamp": candle[0],
+                        "open": candle[1],
+                        "high": candle[2],
+                        "low": candle[3],
+                        "close": candle[4],
+                        "volume": 0
+                    })
+
+                return {
+                    "symbol": coin_id.upper(),
+                    "data": formatted_data
+                }
+            else:
+                raise Exception(f"Failed to fetch historical data for {coin_id}: {response.status}")
+
     async def get_top_cryptocurrencies(self, limit: int = 20) -> List[Dict]:
         """Get top cryptocurrencies by market cap"""
         session = await self._get_session()
