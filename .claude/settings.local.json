@@ -14,7 +14,10 @@
       "Bash(npm install:*)",
       "Bash(timeout 3 bash:*)",
       "Bash(python:*)",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "WebSearch",
+      "Bash(tee:*)",
+      "Bash(timeout 5 bash:*)"
     ],
     "deny": [],
     "ask": []

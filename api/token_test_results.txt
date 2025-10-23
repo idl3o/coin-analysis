@@ -1,0 +1,209 @@
+
+============================================================
+TESTING DDD PORTFOLIO TOKENS
+============================================================
+
+
+### MAIN TOKEN ###
+
+============================================================
+Testing: DDD
+Address: 0x4bf82cf0d6b2afc87367052b793097153c859d38
+Network: polygon
+============================================================
+
+[OK] RESULTS FOR DDD:
+Timestamp: 2025-10-23T11:30:37.974628
+
+  [SUCCESS] GECKOTERMINAL
+    Price: $0.0008656432162
+    Name: Durgan Dynasty Doubloon
+    Symbol: DDD
+    Volume 24h: $51.86
+    Liquidity: $15,517.38
+
+  [FAILED] DEFILLAMA
+    Error: Failed to fetch token from DeFiLlama: No price data found for polygon:0x4bf82cf0d6b2afc87367052b793097153c859d38
+
+  [FAILED] ALCHEMY
+    Error: Alchemy API error: Failed to fetch token metadata: 401 - {"jsonrpc":"2.0","id":1,"error":{"code":-32600,"message":"Must be authenticated!"}}
+
+
+### QUOTE TOKENS ###
+
+============================================================
+Testing: USDGLO
+Address: 0x7ee2dd0022e3460177b90b8f8fa3b3a76d970ff6
+Network: polygon
+============================================================
+
+[OK] RESULTS FOR USDGLO:
+Timestamp: 2025-10-23T11:30:39.051402
+
+  [FAILED] GECKOTERMINAL
+    Error: Failed to fetch token from GeckoTerminal: Token not found on polygon
+
+  [FAILED] DEFILLAMA
+    Error: Failed to fetch token from DeFiLlama: No price data found for polygon:0x7ee2dd0022e3460177b90b8f8fa3b3a76d970ff6
+
+  [FAILED] ALCHEMY
+    Error: Alchemy API error: Failed to fetch token metadata: 401 - {"jsonrpc":"2.0","id":1,"error":{"code":-32600,"message":"Must be authenticated!"}}
+
+============================================================
+Testing: axiREGEN
+Address: 0x520a3b3faca7ddc8dc8cd3380c8475b67f3c7b8d
+Network: polygon
+============================================================
+
+[OK] RESULTS FOR axiREGEN:
+Timestamp: 2025-10-23T11:30:41.762892
+
+  [FAILED] GECKOTERMINAL
+    Error: Failed to fetch token from GeckoTerminal: Token not found on polygon
+
+  [FAILED] DEFILLAMA
+    Error: Failed to fetch token from DeFiLlama: No price data found for polygon:0x520a3b3faca7ddc8dc8cd3380c8475b67f3c7b8d
+
+  [FAILED] ALCHEMY
+    Error: Alchemy API error: Failed to fetch token metadata: 401 - {"jsonrpc":"2.0","id":1,"error":{"code":-32600,"message":"Must be authenticated!"}}
+
+============================================================
+Testing: CCC
+Address: 0x73e6a1630486d0874ec56339327993a3e4684691
+Network: polygon
+============================================================
+
+[OK] RESULTS FOR CCC:
+Timestamp: 2025-10-23T11:30:44.615273
+
+  [FAILED] GECKOTERMINAL
+    Error: Failed to fetch token from GeckoTerminal: Token not found on polygon
+
+  [FAILED] DEFILLAMA
+    Error: Failed to fetch token from DeFiLlama: No price data found for polygon:0x73e6a1630486d0874ec56339327993a3e4684691
+
+  [FAILED] ALCHEMY
+    Error: Alchemy API error: Failed to fetch token metadata: 401 - {"jsonrpc":"2.0","id":1,"error":{"code":-32600,"message":"Must be authenticated!"}}
+
+============================================================
+Testing: PR24
+Address: 0xa249cc5719da5457b212d9c5f4b1e95c7f597441
+Network: polygon
+============================================================
+
+[OK] RESULTS FOR PR24:
+Timestamp: 2025-10-23T11:30:47.348466
+
+  [FAILED] GECKOTERMINAL
+    Error: Failed to fetch token from GeckoTerminal: Token not found on polygon
+
+  [FAILED] DEFILLAMA
+    Error: Failed to fetch token from DeFiLlama: No price data found for polygon:0xa249cc5719da5457b212d9c5f4b1e95c7f597441
+
+  [FAILED] ALCHEMY
+    Error: Alchemy API error: Failed to fetch token metadata: 401 - {"jsonrpc":"2.0","id":1,"error":{"code":-32600,"message":"Must be authenticated!"}}
+
+============================================================
+Testing: NCT
+Address: 0xfc983c854683b562c6e0f858a15b32698b32ba45
+Network: polygon
+============================================================
+
+[OK] RESULTS FOR NCT:
+Timestamp: 2025-10-23T11:30:50.038342
+
+  [FAILED] GECKOTERMINAL
+    Error: Failed to fetch token from GeckoTerminal: Token not found on polygon
+
+  [FAILED] DEFILLAMA
+    Error: Failed to fetch token from DeFiLlama: No price data found for polygon:0xfc983c854683b562c6e0f858a15b32698b32ba45
+
+  [FAILED] ALCHEMY
+    Error: Alchemy API error: Failed to fetch token metadata: 401 - {"jsonrpc":"2.0","id":1,"error":{"code":-32600,"message":"Must be authenticated!"}}
+
+============================================================
+Testing: JCGWR
+Address: 0x7aadf47b49202b904b0f62e533442b09fcaa2614
+Network: polygon
+============================================================
+
+[OK] RESULTS FOR JCGWR:
+Timestamp: 2025-10-23T11:30:52.970903
+
+  [FAILED] GECKOTERMINAL
+    Error: Failed to fetch token from GeckoTerminal: Token not found on polygon
+
+  [FAILED] DEFILLAMA
+    Error: Failed to fetch token from DeFiLlama: No price data found for polygon:0x7aadf47b49202b904b0f62e533442b09fcaa2614
+
+  [FAILED] ALCHEMY
+    Error: Alchemy API error: Failed to fetch token metadata: 401 - {"jsonrpc":"2.0","id":1,"error":{"code":-32600,"message":"Must be authenticated!"}}
+
+============================================================
+Testing: AU24T
+Address: 0xdaa015423b5965f1b198119cd8940e0e551cd74c
+Network: polygon
+============================================================
+
+[OK] RESULTS FOR AU24T:
+Timestamp: 2025-10-23T11:30:55.696272
+
+  [FAILED] GECKOTERMINAL
+    Error: Failed to fetch token from GeckoTerminal: Token not found on polygon
+
+  [FAILED] DEFILLAMA
+    Error: Failed to fetch token from DeFiLlama: No price data found for polygon:0xdaa015423b5965f1b198119cd8940e0e551cd74c
+
+  [FAILED] ALCHEMY
+    Error: Alchemy API error: Failed to fetch token metadata: 401 - {"jsonrpc":"2.0","id":1,"error":{"code":-32600,"message":"Must be authenticated!"}}
+
+============================================================
+Testing: JLT-F24
+Address: 0x4faf57a632bd809974358a5fff9ae4aec5a51b7d
+Network: polygon
+============================================================
+
+[OK] RESULTS FOR JLT-F24:
+Timestamp: 2025-10-23T11:30:58.483222
+
+  [FAILED] GECKOTERMINAL
+    Error: Failed to fetch token from GeckoTerminal: Token not found on polygon
+
+  [FAILED] DEFILLAMA
+    Error: Failed to fetch token from DeFiLlama: No price data found for polygon:0x4faf57a632bd809974358a5fff9ae4aec5a51b7d
+
+  [FAILED] ALCHEMY
+    Error: Alchemy API error: Failed to fetch token metadata: 401 - {"jsonrpc":"2.0","id":1,"error":{"code":-32600,"message":"Must be authenticated!"}}
+
+============================================================
+Testing: JLT-F24-2
+Address: 0xf2bda2e42fbd1ec6ee61b9e11aeb690eb88956c1
+Network: polygon
+============================================================
+
+[OK] RESULTS FOR JLT-F24-2:
+Timestamp: 2025-10-23T11:31:01.221771
+
+  [FAILED] GECKOTERMINAL
+    Error: Failed to fetch token from GeckoTerminal: Token not found on polygon
+
+  [FAILED] DEFILLAMA
+    Error: Failed to fetch token from DeFiLlama: No price data found for polygon:0xf2bda2e42fbd1ec6ee61b9e11aeb690eb88956c1
+
+  [FAILED] ALCHEMY
+    Error: Alchemy API error: Failed to fetch token metadata: 401 - {"jsonrpc":"2.0","id":1,"error":{"code":-32600,"message":"Must be authenticated!"}}
+
+
+============================================================
+SUMMARY
+============================================================
+
+Total Tokens Tested: 10
+GeckoTerminal Success: 1/10
+DeFiLlama Success: 0/10
+Alchemy Success: 0/10
+No Price Data: 9/10
+
+[NOTE]: 3 LP Pool addresses detected.
+   Pool addresses require special handling (use pool endpoints).
+   Pools: ['DDD/JLT-B23', 'DDD/TB01', 'DDD/MC02']
